@@ -33,9 +33,6 @@ global proc N_SecondEx()
 }
 
 
-// Exercise 3) 
-// 	Write a script that based on selection will print how many objects / nodes the user
-// 	has selected.
 global proc N_ThirdEx()
 {
     string $objs[] = `ls -sl`;
@@ -43,10 +40,6 @@ global proc N_ThirdEx()
 }
 
 
-// Exercise 4) 
-// 	Make a copy of the script above and modify the copy so that it now prints
-// 	how many joints are selected, how many meshes are selected and how many transforms
-// 	are selected.
 global proc N_FourthEx()
 {
     string $objs[] = `ls -sl`;
@@ -61,10 +54,6 @@ global proc N_FourthEx()
 }
 
 
-// Exercise 5) 
-// 	Write a script with a UI that has a textField and a button, where the user
-// 	can enter their name and hitting the button will print a welcome message, addressing
-// 	the user by the name they entered.
 global proc N_FifthEx()
 {
     string $win = "Window";

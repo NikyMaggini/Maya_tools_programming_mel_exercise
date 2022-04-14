@@ -1,0 +1,93 @@
+global proc N_FirstEx()
+{
+    string $materials[3];
+    $materials[0] = `shadingNode -asShader lambert`;
+    setAttr ($materials[0] + ".colorR") 1;
+    $materials[1] = `shadingNode -asShader lambert`;
+    setAttr ($materials[1] + ".colorG") 1;
+    $materials[2] = `shadingNode -asShader blinn`;
+    setAttr ($materials[2] + ".colorB") 1;
+    
+    for($i=0; $i < 3; $i=$i+1)
+    {
+        string $sphereName = "pSphere" + $i;
+        string $cubeName = "pCube" + $i;
+        polySphere -n $sphereName;
+        polyCube -n $cubeName;
+        setAttr($sphereName + ".translateX ") (5 * $i);
+        setAttr($cubeName + ".translateX ") (5 * $i);
+        setAttr($cubeName + ".translateY ") 3;
+
+        hyperShade -assign $materials[$i];
+    }
+}
+
+
+global proc N_SecondEx()
+{
+    string $objs[] = `ls -sl`;
+    for($obj in $objs)
+    {
+        move -r 0 1.5 0 $objs;
+    }
+}
+
+
+// Exercise 3) 
+// 	Write a script that based on selection will print how many objects / nodes the user
+// 	has selected.
+global proc N_ThirdEx()
+{
+    string $objs[] = `ls -sl`;
+    print("objects " + size($objs) + "\n");
+}
+
+
+// Exercise 4) 
+// 	Make a copy of the script above and modify the copy so that it now prints
+// 	how many joints are selected, how many meshes are selected and how many transforms
+// 	are selected.
+global proc N_FourthEx()
+{
+    string $objs[] = `ls -sl`;
+    string $meshes[] = `ls -sl -type mesh`;
+    string $joints[] = `ls -sl -type joint`;
+    string $transforms[] = `ls -sl -type transform`;
+
+    print("selection count: " + size($objs) + "\n");
+    print("mesh count: " + size($meshes) + "\n");
+    print("joint count: " + size($joints) + "\n");
+    print("transform count: " + size($transforms) + "\n");
+}
+
+
+// Exercise 5) 
+// 	Write a script with a UI that has a textField and a button, where the user
+// 	can enter their name and hitting the button will print a welcome message, addressing
+// 	the user by the name they entered.
+global proc N_FifthEx()
+{
+    string $win = "Window";
+    
+    if (`window -q -ex $win`)
+    {
+        deleteUI $win;
+    }
+
+    window -widthHeight 300 300 -title "My Window" $win;
+
+    columnLayout -adjustableColumn true;
+    separator -h 15;
+    text -label "Enter your name: ";
+    separator -h 15;
+    string $name = `textField`;
+    separator -h 20;
+    button -label "Enter" -command "buttonEnter($name)";
+    showWindow $win;
+
+    proc buttonEnter(string $stringName)
+    {
+	    string $username = `textField -q -text $stringName`;
+	    print $username;
+    }
+}
